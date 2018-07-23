@@ -84,7 +84,7 @@ local guieditor    = "atom"
 local scrlocker    = "xlock"
 
 awful.util.terminal = terminal
-awful.util.tagnames = { "emacs", "conkeror", "google", "dev", "other" }
+awful.util.tagnames = { "emacs", "studio", "web", "dev", "other" }
 awful.layout.layouts = {
   awful.layout.suit.floating,
   awful.layout.suit.tile,
@@ -341,7 +341,15 @@ globalkeys = gears.table.join(
     { description = "Brightness down", group = "Light"}),
   awful.key({ }, "#233", function () awful.util.spawn("xbacklight -inc 10") end,
     { description = "Brightness up", group = "Light"}),
-  
+
+  -- Widgets popups
+  awful.key({ altkey, }, "c", function () lain.widget.calendar.show(7) end,
+    {description = "show calendar", group = "widgets"}),
+  awful.key({ altkey, }, "h", function () if beautiful.fs then beautiful.fs.show(7) end end,
+      {description = "show filesystem", group = "widgets"}),
+  awful.key({ altkey, }, "w", function () if beautiful.weather then beautiful.weather.show(7) end end,
+      {description = "show weather", group = "widgets"}),
+
   -- Conkeror
   awful.key({ modkey }, "c", function() awful.util.spawn("conkeror") end,
     { description = "Open conkeror", group = "launcher"}),
@@ -357,7 +365,7 @@ globalkeys = gears.table.join(
   -- Xscreensaver
   awful.key({ modkey, "Control" }, "l",
     function ()
-      awful.util.spawn("i3lock -d -i /home/alan/.i3/foxhound.png")
+      awful.util.spawn("i3lock -d -i /home/alan/Images/foxhound.png")
   end),
 
   -- Xdotool
@@ -498,16 +506,16 @@ awful.rules.rules = {
     properties = { maximized = true } },
 
   { rule = { class = "Conkeror" },
-    properties = { tag = "conkeror", switchtotag = true } },
+    properties = { tag = "web", switchtotag = true } },
 
   { rule = { class = "Emacs" },
     properties = { tag = "emacs", switchtotag = true } },
 
   { rule = { class = "Google Chrome" },
-    properties = { tag = "google", switchtotag = true } },
+    properties = { tag = "web", switchtotag = true } },
 
   { rule = { class = "Android Studio" },
-    properties = { tag = "dev", switchtotag = true } }
+    properties = { tag = "studio", switchtotag = true } }
 }
 -- }}}
 
