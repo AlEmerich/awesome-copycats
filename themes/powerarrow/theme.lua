@@ -138,7 +138,7 @@ task:buttons(my_table.join(awful.button({}, 1, lain.widget.contrib.task.prompt))
 
 -- Scissors (xsel copy and paste)
 local scissors = wibox.widget.imagebox(theme.widget_scissors)
-scissors:buttons(my_table.join(awful.button({}, 1, function() awful.spawn("xsel | xsel -i -b") end)))
+scissors:buttons(my_table.join(awful.button({}, 1, function() awful.spawn.with_shell("xsel | xsel -i -b") end)))
 
 -- Mail IMAP check
 local mailicon = wibox.widget.imagebox(theme.widget_mail)
@@ -173,15 +173,15 @@ local mpdicon = wibox.widget.imagebox(theme.widget_music)
 mpdicon:buttons(my_table.join(
     awful.button({ modkey }, 1, function () awful.spawn.with_shell(musicplr) end),
     awful.button({ }, 1, function ()
-        awful.spawn.with_shell("mpc prev")
+        os.execute("mpc prev")
         theme.mpd.update()
     end),
     awful.button({ }, 2, function ()
-        awful.spawn.with_shell("mpc toggle")
+        os.execute("mpc toggle")
         theme.mpd.update()
     end),
     awful.button({ }, 3, function ()
-        awful.spawn.with_shell("mpc next")
+        os.execute("mpc next")
         theme.mpd.update()
     end)))
 theme.mpd = lain.widget.mpd({
@@ -250,7 +250,7 @@ local fsicon = wibox.widget.imagebox(theme.widget_hdd)
 local baticon = wibox.widget.imagebox(theme.widget_battery)
 local bat = lain.widget.bat({
     settings = function()
-        if bat_now.status ~= "N/A" then
+        if bat_now.status and bat_now.status ~= "N/A" then
             if bat_now.ac_status == 1 then
                 widget:set_markup(markup.font(theme.font, " AC "))
                 baticon:set_image(theme.widget_ac)
