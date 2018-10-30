@@ -1,3 +1,14 @@
+-- Override awesome.quit when we're using GNOME
+_awesome_quit = awesome.quit
+awesome.quit = function()
+  if os.getenv("DESKTOP_SESSION") == "awesome-gnome" then
+    os.execute("/usr/bin/gnome-session-quit") -- for Ubuntu 14.04
+    os.execute("pkill -9 gnome-session") -- I use this on Ubuntu 16.04
+  else
+    _awesome_quit()
+  end
+end
+
 --[[
 
   Awesome WM configuration template
@@ -365,7 +376,7 @@ globalkeys = gears.table.join(
   -- Xscreensaver
   awful.key({ modkey, "Control" }, "l",
     function ()
-      awful.util.spawn("i3lock -d -i /home/alan/Images/foxhound.png")
+      awful.util.spawn("i3lock -i /home/alan/Images/foxhound.png -p default -d -n")
   end),
 
   -- Xdotool
@@ -511,10 +522,10 @@ awful.rules.rules = {
   { rule = { class = "Emacs" },
     properties = { tag = "emacs", switchtotag = true } },
 
-  { rule = { class = "Google Chrome" },
+  { rule = { class = "google-chrome" },
     properties = { tag = "web", switchtotag = true } },
 
-  { rule = { class = "Android Studio" },
+  { rule = { class = "jetbrains-studio" },
     properties = { tag = "studio", switchtotag = true } }
 }
 -- }}}

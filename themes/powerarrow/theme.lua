@@ -17,7 +17,7 @@ local net_wireless = net_widget.wireless( {
     font = "Source Code Pro",
     onclick = "termite -e wicd-curses"
 })
-local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+-- local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
 local bright_widget = require("awesome-wm-widgets.brightness-widget.brightness")
 local os, math, string = os, math, string
@@ -244,31 +244,31 @@ local fsicon = wibox.widget.imagebox(theme.widget_hdd)
 --         local fsp = string.format(" %3.2f %s ", fs_now["/"].free, fs_now["/"].units)
 --         widget:set_markup(markup.font(theme.font, fsp))
 --     end
--- })
+-- )})
 
 -- Battery
-local baticon = wibox.widget.imagebox(theme.widget_battery)
-local bat = lain.widget.bat({
-    settings = function()
-        if bat_now.status ~= "N/A" then
-            if bat_now.ac_status == 1 then
-                widget:set_markup(markup.font(theme.font, " AC "))
-                baticon:set_image(theme.widget_ac)
-                return
-            elseif not bat_now.perc and tonumber(bat_now.perc) <= 5 then
-                baticon:set_image(theme.widget_battery_empty)
-            elseif not bat_now.perc and tonumber(bat_now.perc) <= 15 then
-                baticon:set_image(theme.widget_battery_low)
-            else
-                baticon:set_image(theme.widget_battery)
-            end
-            widget:set_markup(markup.font(theme.font, " " .. bat_now.perc .. "% "))
-        else
-            widget:set_markup()
-            baticon:set_image(theme.widget_ac)
-        end
-    end
-})
+-- local baticon = wibox.widget.imagebox(theme.widget_battery)
+-- local bat = lain.widget.bat({
+--     settings = function()
+--         if bat_now.status ~= "N/A" then
+--             if bat_now.ac_status == 1 then
+--                 widget:set_markup(markup.font(theme.font, " AC "))
+--                 baticon:set_image(theme.widget_ac)
+--                 return
+--             elseif not bat_now.perc and tonumber(bat_now.perc) <= 5 then
+--                 baticon:set_image(theme.widget_battery_empty)
+--             elseif not bat_now.perc and tonumber(bat_now.perc) <= 15 then
+--                 baticon:set_image(theme.widget_battery_low)
+--             else
+--                 baticon:set_image(theme.widget_battery)
+--             end
+--             widget:set_markup(markup.font(theme.font, " " .. bat_now.perc .. "% "))
+--         else
+--             widget:set_markup()
+--             baticon:set_image(theme.widget_ac)
+--         end
+--     end
+-- })
 
 -- Net
 local neticon = wibox.widget.imagebox(theme.widget_net)
@@ -361,7 +361,7 @@ function theme.at_screen_connect(s)
             wibox.container.background(wibox.container.margin(wibox.widget { tempicon, temp.widget, layout = wibox.layout.align.horizontal }, 4, 4), "#4B3B51"),
             arrow("#4B3B51", "#CB755B"),
             wibox.container.background(wibox.container.margin(wibox.widget { nil, bright_widget, layout = wibox.layout.align.horizontal }, 3, 3, 3, 2), "#CB755B"),
-            wibox.container.background(wibox.container.margin(wibox.widget { nil, battery_widget, layout = wibox.layout.align.horizontal }, 3, 4, 0, 3), "#CB755B"),
+            -- wibox.container.background(wibox.container.margin(wibox.widget { nil, battery_widget, layout = wibox.layout.align.horizontal }, 3, 4, 0, 3), "#CB755B"),
            wibox.container.background(wibox.container.margin(wibox.widget { volicon, volume_widget, layout = wibox.layout.align.horizontal }, 3, 3, 0, 2), "#CB755B"),
             arrow("#CB755B","#C0C0A2"),
             wibox.container.background(wibox.container.margin(wibox.widget { nil, net_wireless, layout = wibox.layout.align.horizontal }, 3, 3), "#C0C0A2"),
