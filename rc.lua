@@ -88,7 +88,7 @@ local chosen_theme = themes[6]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
 local terminal     = "termite"
-local editor       = "emacsclient25 -c"
+local editor       = "emacsclient26 -c"
 local gui_editor   = "gvim"
 local browser      = "conkeror"
 local guieditor    = "atom"
@@ -366,25 +366,18 @@ globalkeys = gears.table.join(
     { description = "Open conkeror", group = "launcher"}),
 
   -- Emacs
-  awful.key({ modkey }, "e", function() awful.util.spawn("emacsclient25 -c") end,
+  awful.key({ modkey }, "e", function() awful.util.spawn(editor) end,
     { description = "Open Emacs in client mode", group = "launcher"}),
 
   -- Keepass
-  awful.key({ modkey , altkey }, "k", function () awful.spawn("keepass-dmenu --database /home/alan/Dropbox/root.kdbx --password 11235813Alan.") end,
+  awful.key({ modkey , altkey }, "k", function () awful.spawn("sh ~/.local/bin/local_keepass_dmenu.sh") end,
     { description = "Open keepass dmenu", group="security"}),
 
   -- Xscreensaver
   awful.key({ modkey, "Control" }, "l",
     function ()
-      awful.util.spawn("i3lock -i /home/alan/Images/foxhound.png -p default -d -n")
-  end),
-
-  -- Xdotool
-  awful.key({ modkey, altkey }, "o",
-    function ()
-      awful.spawn("sh -c 'echo 11235813Alan. | xclip -selection clipboard'")
-    end,
-    { description = "Write password that Al know", group="security"})
+      awful.util.spawn("sh ~/.local/bin/fuzzy_lock.sh")
+  end)
 )
 
 -- @DOC_Client_KEYBINDINGS@
