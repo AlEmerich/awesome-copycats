@@ -95,7 +95,7 @@ local guieditor    = "atom"
 local scrlocker    = "xlock"
 
 awful.util.terminal = terminal
-awful.util.tagnames = { "emacs", "studio", "web", "dev", "other" }
+awful.util.tagnames = { "a", "w", "e", "s", "o", "m", "e" }
 awful.layout.layouts = {
   awful.layout.suit.floating,
   awful.layout.suit.tile,
@@ -343,10 +343,14 @@ globalkeys = gears.table.join(
     {description = "show the menubar", group = "launcher"}),
   
   -- Widgets
+  awful.key({ }, "#121", function () awful.util.spawn("amixer -D pulse sset Master 0") end,
+    { description = "Volume mute", group = "Sound"}),
   awful.key({ }, "#122", function () awful.util.spawn("amixer -D pulse sset Master 5%-") end,
     { description = "Volume down", group = "Sound"}),
   awful.key({ }, "#123", function () awful.util.spawn("amixer -D pulse sset Master 5%+") end,
     { description = "Volume up", group = "Sound"}),
+
+  
   
   awful.key({ }, "#232", function () awful.util.spawn("xbacklight -dec 10") end,
     { description = "Brightness down", group = "Light"}),
@@ -370,13 +374,13 @@ globalkeys = gears.table.join(
     { description = "Open Emacs in client mode", group = "launcher"}),
 
   -- Keepass
-  awful.key({ modkey , altkey }, "k", function () awful.spawn("sh ~/.local/bin/local_keepass_dmenu.sh") end,
+  awful.key({ modkey , altkey }, "k", function () awful.spawn("sh /home/alan/.local/bin/local_keepass_dmenu.sh") end,
     { description = "Open keepass dmenu", group="security"}),
 
   -- Xscreensaver
   awful.key({ modkey, "Control" }, "l",
     function ()
-      awful.util.spawn("sh ~/.local/bin/fuzzy_lock.sh")
+      awful.util.spawn("sh /home/alan/.local/bin/fuzzy_lock.sh")
   end)
 )
 
@@ -504,22 +508,21 @@ awful.rules.rules = {
 
   -- Titlebars
   { rule_any = { type = { "dialog", "normal" } },
-    properties = { titlebars_enabled = true } },
+    properties = { titlebars_enabled = false } },
 
   { rule = { class = "Gimp", role = "gimp-image-window" },
     properties = { maximized = true } },
+  {
+    rule = {
+      class = "jetbrains-idea",
+      instance = "sun-awt-X11-XWindowPeer"
+    }, 
+    properties = {
+      floating = true,
+      focus = true
+    }
+  }
 
-  { rule = { class = "Conkeror" },
-    properties = { tag = "web", switchtotag = true } },
-
-  { rule = { class = "Emacs" },
-    properties = { tag = "emacs", switchtotag = true } },
-
-  { rule = { class = "google-chrome" },
-    properties = { tag = "web", switchtotag = true } },
-
-  { rule = { class = "jetbrains-studio" },
-    properties = { tag = "studio", switchtotag = true } }
 }
 -- }}}
 

@@ -43,10 +43,10 @@ local function getPercentage(value)
     return math.floor(value / (total+total_swap) * 100 + 0.5) .. '%'
 end
 
-watch('bash -c "free | grep -z Mem.*Swap.*"', 1,
+watch('free | grep Mem.*Partition', 1,
     function(widget, stdout, stderr, exitreason, exitcode)
         total, used, free, shared, buff_cache, available, total_swap, used_swap, free_swap =
-            stdout:match('(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*Swap:%s*(%d+)%s*(%d+)%s*(%d+)')
+            stdout:match('(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*Partition d\'échange:%s*(%d+)%s*(%d+)%s*(%d+)')
 
         widget.data = { used, total-used } widget.data = { used, total-used }
 
