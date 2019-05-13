@@ -605,11 +605,19 @@ function border_adjust(c)
     c.border_width = beautiful.border_width
     c.border_color = beautiful.border_focus
   end
+  c.opacity = 1
+end
+
+function unfocus(c)
+  c.border_color = beautiful.border_normal
+  c.opacity = 0.8
 end
 
 client.connect_signal("focus", border_adjust)
 client.connect_signal("property::maximized", border_adjust)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("unfocus", unfocus)
 
+-- Startup program
 awful.util.spawn_with_shell("~/.config/awesome/locker.sh")
+awful.util.spawn_with_shell("compton --daemon")
 -- }}}

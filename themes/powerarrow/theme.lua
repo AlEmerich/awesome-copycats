@@ -285,8 +285,12 @@ function theme.at_screen_connect(s)
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, awful.util.taglist_buttons)
 
-    -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
+    -- Create a tasklist widge --
+    s.mytasklist = awful.widget.tasklist(
+      s,
+      awful.widget.tasklist.filter.currenttags,
+      awful.util.tasklist_buttons,
+      { bg_focus = "#ff8c00", shape = gears.shape.rounded_rect, shape_border_width = 2, shape_border_color = "#222222", align = "center" })
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s, height = 20, bg = theme.bg_normal, fg = theme.fg_normal })
@@ -305,6 +309,7 @@ function theme.at_screen_connect(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
 
+            arrow("#222222", "#ff8c00"),
             wibox.container.background(wibox.container.margin(wibox.widget.systray(), 2, 0), "#ff8c00"),
 
             -- using separators
