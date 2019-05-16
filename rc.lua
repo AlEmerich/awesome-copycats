@@ -31,6 +31,15 @@ local menubar       = require("menubar")
 local freedesktop   = require("freedesktop")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 local my_table      = awful.util.table or gears.table -- 4.{0,1} compatibility
+
+local conky = require("conky")
+conky.options = "-b"
+conky.properties = {
+  opacity = 0
+}
+conky.raise = function(c) c.opacity = 1.0 end
+conky.lower = function(c) c.opacity = 0 end
+
 -- }}}
 
 -- {{{ Error handling
@@ -67,6 +76,7 @@ local function run_once(cmd_arr)
 end
 
 run_once({ "unclutter -root" }) -- entries must be comma-separated
+run_once({ "compton --daemon"})
 -- }}}
 
 -- {{{ Variable definitions
@@ -236,7 +246,7 @@ root.buttons(my_table.join(
 -- {{{ Key bindings
 -- @DOC_GLOBAL_KEYBINDINGS@
 globalkeys = gears.table.join(
-  -- Volume 
+  -- Volume
   awful.key({ }, "#122", function () awful.util.spawn("amixer -D pulse sset Master 5%-") end),
   awful.key({ }, "#123", function () awful.util.spawn("amixer -D pulse sset Master 5%+") end),
 
@@ -350,8 +360,6 @@ globalkeys = gears.table.join(
   awful.key({ }, "#123", function () awful.util.spawn("amixer -D pulse sset Master 5%+") end,
     { description = "Volume up", group = "Sound"}),
 
-  
-  
   awful.key({ }, "#232", function () awful.util.spawn("xbacklight -dec 10") end,
     { description = "Brightness down", group = "Light"}),
   awful.key({ }, "#233", function () awful.util.spawn("xbacklight -inc 10") end,
@@ -381,7 +389,10 @@ globalkeys = gears.table.join(
   awful.key({ modkey, "Control" }, "l",
     function ()
       awful.util.spawn("sh /home/alan/.local/bin/fuzzy_lock.sh")
-  end)
+  end),
+
+  conky.show_key("c", { modkey }),
+  conky.toggle_key("c", {modkey, altkey})
 )
 
 -- @DOC_Client_KEYBINDINGS@

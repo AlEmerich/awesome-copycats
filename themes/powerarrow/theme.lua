@@ -309,7 +309,6 @@ function theme.at_screen_connect(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
 
-            arrow("#222222", "#ff8c00"),
             wibox.container.background(wibox.container.margin(wibox.widget.systray(), 2, 0), "#ff8c00"),
 
             -- using separators
